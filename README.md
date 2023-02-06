@@ -207,6 +207,26 @@ Se implementa la dependencia de base de datos mysql
 implementation "mysql:mysql-connector-java:5.1.37"
 ```
 
+### Configuraciones extras para conectarse a la base de datos con mysql
+
+primero en build.gradle carpeta raiz dentro de buildscript implementamos esta dependencia
+
+```CS
+buildscript {
+	ext { // objecto ya exxistente
+		cleanArchitectureVersion = '2.4.9'
+		springBootVersion = '2.7.7'
+		sonarVersion = '3.0'
+		jacocoVersion = '0.8.8'
+        lombokVersion = '1.18.24'
+	}
+
+    dependencies { // nueva linea a agregar
+        classpath "mysql:mysql-connector-java:5.1.37"
+    }
+}
+```
+
 ## Configurar el build.gradle en infrastructure, driven-adapters, rabbitmq-publisher
 
 Se implementa las dependencias de reactive commons para la conexión con RabbitMQ
@@ -251,11 +271,11 @@ nota
 
     - convertidor: <b>para mapear de entidas a object</b>
 
-### Luego sigue la implementación de los casos de uso en la capa domain useCase
+#### Luego sigue la implementación de los casos de uso en la capa domain useCase
 
-### Ya despues sigue la implementación del entry point en infrastructure entry-point, api-rest
+#### Ya despues sigue la implementación del entry point en infrastructure entry-point, api-rest
 
-## Arrancar la aplicacion se debe remover el todo del h2 para poder usar una base de datos real
+#### Arrancar la aplicacion se debe remover el TODO del h2 para poder usar una base de datos real
 
 ```CS
  properties.setProperty("hibernate.hbm2ddl.auto", "update"); // TODO: remove this for non auto create schema
@@ -301,7 +321,7 @@ ELIMINAR LOS COMENTARIOS
       //.secure(sslContextSpec -> sslContextSpec.sslContext(sslContext))
 ```
 
-VACIAR EL REST CONSUMER
+VACIAR EL REST CONSUMER, dejar la clase sin metodos
 
 ```CS
 
@@ -338,31 +358,29 @@ VACIAR EL REST CONSUMER
     }
 ```
 
-## Configuraciones extras para conectarse a la base de datos con mysql
-
-### primero en build.gradle carpeta raiz dentro de buildscript implementamos esta dependencia
-
-```CS
-buildscript {
-	ext { // objecto ya exxistente
-		cleanArchitectureVersion = '2.4.9'
-		springBootVersion = '2.7.7'
-		sonarVersion = '3.0'
-		jacocoVersion = '0.8.8'
-        lombokVersion = '1.18.24'
-	}
-
-    dependencies { // nueva linea a agregar
-        classpath "mysql:mysql-connector-java:5.1.37"
-    }
-}
-```
-
-### Despuesde agregar esa linea se debe implementar la dependencia en build gradle en jpa-repository
+#### Despuesde agregar esa linea se debe implementar la dependencia en build gradle en jpa-repository
 
 ```CS
 implementation "mysql:mysql-connector-java:5.1.37"
 ```
+
+#### Ya en este punto el servicio rest deberia de funcionar correctamente
+
+## Configuraciones necesarias para implementar el brocker de mensajeria rabbitMQ
+
+### 1. Crear en la capa de domain, model, persona un gateway que nos servira como el publicador
+
+### 2. Luego de eso vamos crear un endPoint desde infrastructure, entry-points, api-rest, PersonaRest, para que nos sirva para llamar la mensajeria con rabbit el publicador
+
+### 3. Luego vamos a crear el caso de uso ya que lo necesitamos, ojo tenemos que inyectar el gateway de PersonaPublicador
+
+### 4. Ahora para poder crear en si la comunicación debemos crear el publisher de rabbitMQ
+
+#### se creara en infrastructure, driven-adapters, rabbitmq-publisher
+
+#### la clase PublicadorRabbitmq y se implementa el gateway de PersonaPublicador
+
+## Creación del consumudor con raabbitMQ, infrastructure, rentry-points, rabbitmq-subcritor
 
 
 

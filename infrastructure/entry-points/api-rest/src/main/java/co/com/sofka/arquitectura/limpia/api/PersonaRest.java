@@ -31,4 +31,12 @@ public class PersonaRest {
     public Mono<Persona> guardarPersona(@RequestBody Persona persona){
         return personaUseCase.guardarPersona(persona);
     }
+
+    /**
+     * Ruta para buscar personas con mensajeria rabbitMQ
+     */
+    @GetMapping("/buscar-por-comando")
+    public Mono<String> buscarPersonasPorComando(){
+        return personaUseCase.buscarPersonaPorComando();
+    }
 }
