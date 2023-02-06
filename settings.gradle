@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        //mavenLocal()
+        //maven { url '...' }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'proyecto-arquitectura-hexagonal'
+
+include ':app-service'
+include ':model'
+include ':usecase'
+project(':app-service').projectDir = file('./applications/app-service')
+project(':model').projectDir = file('./domain/model')
+project(':usecase').projectDir = file('./domain/usecase')
+include ':jpa-repository'
+project(':jpa-repository').projectDir = file('./infrastructure/driven-adapters/jpa-repository')
+include ':rest-consumer'
+project(':rest-consumer').projectDir = file('./infrastructure/driven-adapters/rest-consumer')
+include ':rabbitmq-publisher'
+project(':rabbitmq-publisher').projectDir = file('./infrastructure/driven-adapters/rabbitmq-publisher')
+include ':api-rest'
+project(':api-rest').projectDir = file('./infrastructure/entry-points/api-rest')
+include ':rabbitmq-subscriptor'
+project(':rabbitmq-subscriptor').projectDir = file('./infrastructure/entry-points/rabbitmq-subscriptor')

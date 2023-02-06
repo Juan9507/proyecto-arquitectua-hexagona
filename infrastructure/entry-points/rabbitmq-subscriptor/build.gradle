@@ -1,0 +1,10 @@
+dependencies {
+    implementation project(':model')
+    implementation project(':usecase')
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework.amqp:spring-rabbit'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+
+    implementation 'org.reactivecommons:async-commons-api:0.6.2'
+    implementation 'org.reactivecommons:async-commons-starter:0.6.2'
+}
