@@ -39,4 +39,14 @@ public class PersonaRest {
     public Mono<String> buscarPersonasPorComando(){
         return personaUseCase.buscarPersonaPorComando();
     }
+
+    @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<Boolean> add(@RequestBody Persona persona){
+        return personaUseCase.save(persona);
+    }
+
+    @PostMapping(value = "/exist", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<Boolean> exist(@RequestBody Persona persona){
+        return personaUseCase.exist(persona);
+    }
 }
